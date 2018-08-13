@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Post constructor by Daniil Postnov</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+	<!-- Start Create Post -->
+
+	<div class="create">
+		<div class="create__row">
+			<label for="" class="create__label">Title</label>
+			<input type="text" class="create__field">
+		</div>
+
+		<div class="create__row">
+			<label for="" class="create__label">Describe</label>
+			<textarea type="text" class="create__field"></textarea>
+		</div>
+
+		<div class="create__row">
+			<ul class="create__images create-images">
+				<li class="create-images__item">
+					<img src="" alt="" class="create-images__preview">
+				</li>
+				<li class="create-images__item">
+					<img src="" alt="" class="create-images__preview">
+				</li>
+				<li class="create-images__item">
+					<img src="" alt="" class="create-images__preview">
+				</li>
+			</ul>
+		</div>
+
+		<div class="create__row">
+			<div class="create__survey create-survey">
+				<button class="create-survey__btn">Add survey</button>
+
+				<div class="create-survey__content">
+					<fieldset>
+						<input type="text" class="create-survey__title" placeholder="Введите заголовок опроса">
+					</fieldset>
+					<button class="create-survey__btn-option">add option</button>
+					<ul class="create-survey__list">
+						<li class="create-survey__list">
+							<input class="create-survey__field" type="text">
+							<i class="create-survey__delete-option">x</i>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+
+	<!-- End Create Post -->
+
+
+
+	<!-- Start Preview Post -->
+
+	<div class="preview">
+		<p class="preview__title"></p>
+		<div class="preview__slider preview-slider">
+			<ul class="preview-slider__list">
+				<li class="preview-slider__item">
+					<img src="" alt="" class="preview-slider__img">
+				</li>
+			</ul>
+		</div>
+		<div class="preview__survey preview-survey">
+			<p class="preview-survey__title"></p>
+			<fieldset class="preview-survey__fieldset">
+				<label for="" class="preview-survey__label">
+					<input type="radio" class="preview-survey__radio" name="survey-answer">
+				</label>
+
+				<label for="" class="preview-survey__label">
+					<input type="radio" class="preview-survey__radio" name="survey-answer">
+				</label>
+
+				<label for="" class="preview-survey__label">
+					<input type="radio" class="preview-survey__radio" name="survey-answer">
+				</label>
+
+				<label for="" class="preview-survey__label">
+					<input type="radio" class="preview-survey__radio" name="survey-answer">
+				</label>
+
+				<label for="" class="preview-survey__label">
+					<input type="radio" class="preview-survey__radio" name="survey-answer">
+				</label>
+
+			</fieldset>
+		</div>
+	</div>
+
+
+	<!-- End Preview Post -->
+
+
+	<script src="script.js"></script>
+</body>
+</html>
