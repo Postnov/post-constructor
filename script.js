@@ -116,15 +116,15 @@ dropzone.addEventListener('drop', function drop(e) {
 	var files = e.dataTransfer.files;
 
 
-	if (counterAmountFiles <= 10) {
-		handleImage(files);
-	}
+	if (counterAmountFiles <= 10) handleImage(files);
 
-	if (counterAmountFiles == 10) alert('Нельзя загрузить больше 10 файлов');
+	if (counterAmountFiles >= 10 || (files.length > 10 && counterAmountFiles == 0)  ) alert('Нельзя загрузить больше 10 файлов');
 
-	if (files.length > (10 - counterAmountFiles) && counterAmountFiles < 10) {
+	if (files.length > (10 - counterAmountFiles) && counterAmountFiles < 10 && counterAmountFiles > 0) {
 		alert('Всего можно загрузить 10 файлов. Вы уже загрузили ' + counterAmountFiles + '.\nВы загружаете ' + files.length + ' файлов.\nИз вашей группы были загружены первые ' + (10 - counterAmountFiles) + ' файлов.');
 	}
+
+
 
 });
 
