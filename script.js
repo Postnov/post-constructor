@@ -62,7 +62,8 @@ inputsType.forEach(function(item) {
 var dropzone = document.querySelector('#dropzone'),
 	droplist = document.querySelector('#droplist'),
 	sliderList = document.querySelector('#preview-slider-list'),
-	queue = [];
+	queue = [],
+	counterAmountFiles = 0;
 
 
 // Prevent default drop document
@@ -111,23 +112,19 @@ var dropzone = document.querySelector('#dropzone'),
 */
 
 
-dropzone.addEventListener('drop', function(e) {
-	var files = e.dataTransfer.files,
-		file;
-
-		Object.keys(files).forEach(function(item, i) {
-			file = files[i];
-			handleImage(file);
-		});
-
-		console.log(queue);
-		console.log(queue.length)
+dropzone.addEventListener('drop', function drop(e) {
+	var files = e.dataTransfer.files;
 
 
-		// if (queue.length > 10) {
-		// 	alert('Можно добавить только 10 изображений');
-		// 	return false;
-		// }
+	if (counterAmountFiles <= 10) {
+		handleImage(files);
+	}
+
+	if (counterAmountFiles == 10) alert('Нельзя загрузить больше 10 файлов');
+
+	if (files.length > (10 - counterAmountFiles) && counterAmountFiles < 10) {
+		alert('Всего можно загрузить 10 файлов. Вы уже загрузили ' + counterAmountFiles + '.\nВы загружаете ' + files.length + ' файлов.\nИз вашей группы были загружены первые ' + (10 - counterAmountFiles) + ' файлов.');
+	}
 
 });
 
@@ -141,16 +138,26 @@ dropzone.addEventListener('drop', function(e) {
 */
 
 
-function handleImage(file) {
+function handleImage(files) {
 
-	var reader =  new FileReader();
 
-	reader.onload = function (e) {
-		queue.push(e.target.result);
-		renderImageList(queue); // массив
-	};
+	for( file of files) {
+		var reader =  new FileReader();
 
-	reader.readAsDataURL(file);
+		reader.onload = function (e) {
+			if (counterAmountFiles < 10) {
+				queue.push(e.target.result);
+				++counterAmountFiles;
+				renderImageList(queue); // массив
+			}else {
+				reader.abort();
+				return;
+			}
+		};
+
+		reader.readAsDataURL(file);
+	}
+
 
 
 
@@ -187,8 +194,25 @@ function renderImageList(imageArray) {
 		if (!droplist.classList.contains('active')) {
 			droplist.classList.add('active');
 		}
+
+		constructorItem.addEventListener('click', function() {
+			--counterAmountFiles;
+			var id = this.getAttribute('data-id');
+			queue = queue.filter(function(item, i) {
+				return i != +id;
+			});
+			renderImageList(queue);
+
+			if(droplist.children.length == 0) {
+				droplist.classList.remove('active');
+			};
+		});
+
 	});
 }
+
+
+
 
 
 
