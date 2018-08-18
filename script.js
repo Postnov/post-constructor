@@ -38,10 +38,10 @@ inputsType.forEach(function(item) {
    var selector = item.getAttribute('data-target'),
        typeElem = document.querySelector(selector),
        oldContent = typeElem.innerHTML;
-   
+
    item.addEventListener('keyup', function() {
       typeElem.innerHTML = item.value;
-      
+
       if (!item.value.length) {
          typeElem.innerHTML = oldContent;
       }
@@ -115,13 +115,19 @@ dropzone.addEventListener('drop', function(e) {
 	var files = e.dataTransfer.files,
 		file;
 
-		Object.keys(files).forEach(function(item, i, arr) {		
-			var reader = new FileReader();
+		Object.keys(files).forEach(function(item, i) {
 			file = files[i];
-			handleImage(file, queue);
+			handleImage(file);
 		});
 
-		if (queue.length > 10) alert('Можно добавить только 10 изображений')
+		console.log(queue);
+		console.log(queue.length)
+
+
+		// if (queue.length > 10) {
+		// 	alert('Можно добавить только 10 изображений');
+		// 	return false;
+		// }
 
 });
 
@@ -135,48 +141,58 @@ dropzone.addEventListener('drop', function(e) {
 */
 
 
-function handleImage(file, files) {
+function handleImage(file) {
 
 	var reader =  new FileReader();
 
+	reader.onload = function (e) {
+		queue.push(e.target.result);
+		renderImageList(queue); // массив
+	};
 
-	if(queue.length < 10) {
-
-		reader.onload = function(e) {
-			var imageElem = `<li class="droparea__item">
-								<img src="`+ e.target.result +`" alt="" class="droparea__img">
-							</li>`,
-				sliderImage =  `<li class="preview-slider__item">
-							      <img src="`+ e.target.result +`" alt="" class="preview-slider__img">
-								</li>`;
+	reader.readAsDataURL(file);
 
 
 
-			droplist.innerHTML += imageElem;
-			sliderList.innerHTML += sliderImage;
-
-			if (!droplist.classList.contains('active')) {
-				droplist.classList.add('active');
-			}
-
-			queue.push({file: file});
-
-	        droplist.querySelectorAll('.droparea__item').forEach(function(item) {
-	        	item.addEventListener('click', function(e) {
-		            e.preventDefault();
-		            console.log(queue);
-		            removeImage(file, queue, e.target);
-	        	});
-	    	});	
-
-	    	
-		};  
-
-
-		reader.readAsDataURL(file);
-
-	}
 }
+
+function renderImageList(imageArray) {
+
+	droplist.innerHTML = '';
+	sliderList.innerHTML = '';
+
+	imageArray.forEach(function(item, i) {
+
+		var constructorItem = document.createElement('li'),
+			sliderItem = document.createElement('li');
+
+
+		var img = document.createElement('img');
+		img.src = item;
+
+		var img2 = img.cloneNode();
+
+		constructorItem.setAttribute('data-id', i);
+		sliderItem.setAttribute('data-id', i);
+
+		constructorItem.classList.add('droparea__item');
+		sliderItem.classList.add('preview-slider__item');
+
+		constructorItem.appendChild(img);
+		sliderItem.appendChild(img2);
+
+		droplist.appendChild(constructorItem);
+		sliderList.appendChild(sliderItem);
+
+		if (!droplist.classList.contains('active')) {
+			droplist.classList.add('active');
+		}
+	});
+}
+
+
+
+
 
 
 
@@ -186,7 +202,6 @@ function removeImage(file, queue, li) {
 		return item.file != file;
 	});
 
-	console.log(queue);
 	li.parentNode.removeChild(li);
 
 }
