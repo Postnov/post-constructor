@@ -25,17 +25,17 @@
 			</div>
 
 			<div class="create__row">
-				<ul class="create__images create-images">
-<!-- 					<li class="create-images__item">
-						<img src="" alt="" class="create-images__preview">
-					</li>
-					<li class="create-images__item">
-						<img src="" alt="" class="create-images__preview">
-					</li>
-					<li class="create-images__item">
-						<img src="" alt="" class="create-images__preview">
-					</li> -->
-				</ul>
+				<div class="droparea">
+					<span class="droparea__text">Drop image or</span>
+					<input type="file" id="fileElem" multiple accept="image/*">
+					<label class="button btn" for="fileElem">choose image</label>
+
+					<ul class="droparea__list">
+<!-- 						<li class="droparea__item">
+							<img src="images/product-1.jpg" alt="" class="droparea__img">
+						</li>	 -->									
+					</ul>
+				</div>
 			</div>
 
 			<div class="create__row">
@@ -92,7 +92,7 @@
 
 			<div class="preview__survey preview-survey">
 				<p class="preview-survey__title">Survey title</p>
-				
+
 <!-- 				<label for="option-1" class="preview-survey__label">
 					<input type="radio" id="option-1" class="preview-survey__radio" name="survey-answer">
 					<span class="preview-survey__label-text">Text</span>

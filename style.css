@@ -95,9 +95,64 @@ textarea {
 	/*box-shadow: inset 0 0 0 0 rgba(0, 0, 0, .5);*/	
 }
 
-.create-images {
+.droparea {
+	border: 2px dashed #ccc;
+	min-height: 300px;
+	padding: 30px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-ms-align-items: center;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.droparea__text {
+	margin-right: 10px;
+}
+
+.droparea__list {
+	flex-basis: 100%;
+	margin-top: 20px;
 	padding-left: 0;
 	list-style: none;
+	text-align: center;
+	display: none;
+}
+
+.droparea__list.active {
+	display: block;
+}
+
+.droparea__item {
+	width: 200px;
+	min-height: 150px;
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.droparea__img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#fileElem {
+	display: none;
+}
+
+.droparea.hightlight {
+	border-color: #fff;
 }
 
 
