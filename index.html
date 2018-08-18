@@ -7,103 +7,104 @@
 </head>
 <body>
 
+	<div class="container">
 
-	<!-- Start Create Post -->
+		<!-- Start Create Post -->
 
-	<div class="create">
-		<div class="create__row">
-			<label for="" class="create__label">Title</label>
-			<input type="text" class="create__field js-typeText" data-target=".preview__title">
-		</div>
+		<div class="create">
+			<h1>Post constructor</h1>
 
-		<div class="create__row">
-			<label for="" class="create__label">Describe</label>
-			<textarea type="text" class="create__field js-typeText" data-target=".preview__subtitle"></textarea>
-		</div>
+			<div class="create__row">
+				<label for="" class="create__label">Title</label>
+				<input type="text" class="create__field js-typeText" data-target=".preview__title">
+			</div>
 
-		<div class="create__row">
-			<ul class="create__images create-images">
-				<li class="create-images__item">
-					<img src="" alt="" class="create-images__preview">
-				</li>
-				<li class="create-images__item">
-					<img src="" alt="" class="create-images__preview">
-				</li>
-				<li class="create-images__item">
-					<img src="" alt="" class="create-images__preview">
-				</li>
-			</ul>
-		</div>
+			<div class="create__row">
+				<label for="" class="create__label">Describe</label>
+				<textarea type="text" class="create__field js-typeText" data-target=".preview__subtitle"></textarea>
+			</div>
 
-		<div class="create__row">
-			<div class="create__survey create-survey">
-				<button class="create-survey__btn">Add survey</button>
+			<div class="create__row">
+				<ul class="create__images create-images">
+<!-- 					<li class="create-images__item">
+						<img src="" alt="" class="create-images__preview">
+					</li>
+					<li class="create-images__item">
+						<img src="" alt="" class="create-images__preview">
+					</li>
+					<li class="create-images__item">
+						<img src="" alt="" class="create-images__preview">
+					</li> -->
+				</ul>
+			</div>
 
-				<div class="create-survey__content">
-					<fieldset>
-						<input type="text" class="create-survey__title" placeholder="Введите заголовок опроса">
-					</fieldset>
-					<button class="create-survey__btn-option">add option</button>
-					<ul class="create-survey__list">
-						<li class="create-survey__list">
-							<input class="create-survey__field" type="text">
-							<i class="create-survey__delete-option">x</i>
-						</li>
-					</ul>
+			<div class="create__row">
+				<div class="create__survey create-survey">
+					<button class="create-survey__btn btn">Add survey</button>
+
+					<div class="create-survey__content">
+
+						<h2>Input servey name</h2>
+						<input type="text" class="create-survey__title post-field js-typeText" data-target=".preview-survey__title" placeholder="Survey name">
+
+						<button class="create-survey__btn-option btn">add option</button>
+						<button class="create-survey__btn-option btn btn-danger">delete survey</button>
+
+						<ul class="create-survey__list">
+<!-- 							<li class="create-survey__item">
+								<input class="create-survey__field" type="text" placeholder="Option name">
+								<i class="create-survey__delete-option">x</i>
+							</li>
+							<li class="create-survey__item">
+								<input class="create-survey__field" type="text" placeholder="Option name">
+								<i class="create-survey__delete-option">x</i>
+							</li>	 -->						
+						</ul>
+					</div>
 				</div>
+			</div>
+
+
+
+		</div>
+
+
+		<!-- End Create Post -->
+
+
+
+		<!-- Start Preview Post -->
+
+		
+
+		<div class="preview">
+			<h1>Post preview</h1>
+
+			<h2 id="preview__title" class="preview__title">Post title</h2>
+			<p  id="preview__subtitle" class="preview__subtitle">Post descrive</p>
+			<div class="preview__slider preview-slider">
+				<ul class="preview-slider__list">
+					<li class="preview-slider__item">
+						<img src="" alt="" class="preview-slider__img">
+					</li>
+				</ul>
+			</div>
+
+			<div class="preview__survey preview-survey">
+				<p class="preview-survey__title">Survey title</p>
+				
+<!-- 				<label for="option-1" class="preview-survey__label">
+					<input type="radio" id="option-1" class="preview-survey__radio" name="survey-answer">
+					<span class="preview-survey__label-text">Text</span>
+				</label> -->
 			</div>
 		</div>
 
 
+		<!-- End Preview Post -->
+
 
 	</div>
-
-
-	<!-- End Create Post -->
-
-
-
-	<!-- Start Preview Post -->
-
-	<div class="preview">
-		<h2 id="preview__title" class="preview__title">Post title</h2>
-		<p  id="preview__subtitle" class="preview__subtitle">Post descrive</p>
-		<div class="preview__slider preview-slider">
-			<ul class="preview-slider__list">
-				<li class="preview-slider__item">
-					<img src="" alt="" class="preview-slider__img">
-				</li>
-			</ul>
-		</div>
-		<div class="preview__survey preview-survey">
-			<p class="preview-survey__title"></p>
-			<fieldset class="preview-survey__fieldset">
-				<label for="" class="preview-survey__label">
-					<input type="radio" class="preview-survey__radio" name="survey-answer">
-				</label>
-
-				<label for="" class="preview-survey__label">
-					<input type="radio" class="preview-survey__radio" name="survey-answer">
-				</label>
-
-				<label for="" class="preview-survey__label">
-					<input type="radio" class="preview-survey__radio" name="survey-answer">
-				</label>
-
-				<label for="" class="preview-survey__label">
-					<input type="radio" class="preview-survey__radio" name="survey-answer">
-				</label>
-
-				<label for="" class="preview-survey__label">
-					<input type="radio" class="preview-survey__radio" name="survey-answer">
-				</label>
-
-			</fieldset>
-		</div>
-	</div>
-
-
-	<!-- End Preview Post -->
 
 
 	<script src="script.js"></script>

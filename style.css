@@ -1,0 +1,141 @@
+body {
+	background-color: #43535f; /*#26A69A*/
+	padding-top: 50px;
+	color: #fff;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+*{
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+}
+
+.btn {
+	border: none;
+	background-color: #fff;
+	color: #43535f;
+	padding: 10px 35px;
+	border-radius: 3px;
+	box-shadow: 0 4px 10px -1px #34414a;
+	cursor: pointer;
+	-webkit-transition: .3s all;
+	-o-transition: .3s all;
+	transition: .3s all;
+	outline: none;
+}
+
+.btn-danger {
+	background-color: #5a0909;
+    color: #fff;	
+}
+
+.btn:hover {
+	color: #fff;
+	background-color: #34414a;
+}
+
+.container {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: space-between;
+	-ms-align-items: flex-start;
+	align-items: flex-start;
+	max-width: 1170px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.create {
+	width: 69%;
+}
+
+.preview {
+	width: 30%;
+}
+
+.create, .preview {
+	box-shadow: 0 5px 10px 0 #34414a; 
+	/*box-shadow: 0 5px 10px 0 #20887e; */
+	padding: 20px;
+	margin-bottom: 50px;
+	border-radius: 5px;
+}
+
+textarea {
+	width: 500px;
+	height: 100px;
+	resize: vertical;
+}
+
+.create__row {
+	margin-bottom: 30px;
+}
+
+.create__label {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 20px;
+}
+
+input[type="text"],
+textarea {
+	padding: 10px;
+	outline: none;
+	color: #fff;
+	background-color: #34414a; /*#20887e;*/
+	border: none;
+	border-radius: 3px;
+	/*box-shadow: inset 0 0 0 0 rgba(0, 0, 0, .5);*/	
+}
+
+.create-images {
+	padding-left: 0;
+	list-style: none;
+}
+
+
+
+
+
+
+.create-survey__list {
+	padding-left: 0;
+	list-style: none;
+}
+
+.create-survey__delete-option {
+	font-style: normal;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.create-survey__delete-option:hover {
+	color: #630013;
+}
+
+
+.create-survey__item {
+	margin-bottom: 10px;
+}
+
+
+
+
+
+.preview-slider__list {
+	padding-left: 0;
+	list-style: none;
+	overflow: hidden;
+}
+
+.preview-survey__radio,
+.preview-survey__label-text {
+	vertical-align: middle;
+}
