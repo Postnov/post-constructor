@@ -13,12 +13,12 @@
 	<div class="create">
 		<div class="create__row">
 			<label for="" class="create__label">Title</label>
-			<input type="text" class="create__field">
+			<input type="text" class="create__field js-typeText" data-target=".preview__title">
 		</div>
 
 		<div class="create__row">
 			<label for="" class="create__label">Describe</label>
-			<textarea type="text" class="create__field"></textarea>
+			<textarea type="text" class="create__field js-typeText" data-target=".preview__subtitle"></textarea>
 		</div>
 
 		<div class="create__row">
@@ -66,7 +66,8 @@
 	<!-- Start Preview Post -->
 
 	<div class="preview">
-		<p class="preview__title"></p>
+		<h2 id="preview__title" class="preview__title">Post title</h2>
+		<p  id="preview__subtitle" class="preview__subtitle">Post descrive</p>
 		<div class="preview__slider preview-slider">
 			<ul class="preview-slider__list">
 				<li class="preview-slider__item">
