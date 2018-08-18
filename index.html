@@ -25,16 +25,12 @@
 			</div>
 
 			<div class="create__row">
-				<div class="droparea">
+				<div id="dropzone" class="droparea">
 					<span class="droparea__text">Drop image or</span>
 					<input type="file" id="fileElem" multiple accept="image/*">
 					<label class="button btn" for="fileElem">choose image</label>
 
-					<ul class="droparea__list">
-<!-- 						<li class="droparea__item">
-							<img src="images/product-1.jpg" alt="" class="droparea__img">
-						</li>	 -->									
-					</ul>
+					<ul id="droplist" class="droparea__list"></ul>
 				</div>
 			</div>
 
@@ -83,11 +79,7 @@
 			<h2 id="preview__title" class="preview__title">Post title</h2>
 			<p  id="preview__subtitle" class="preview__subtitle">Post descrive</p>
 			<div class="preview__slider preview-slider">
-				<ul class="preview-slider__list">
-					<li class="preview-slider__item">
-						<img src="" alt="" class="preview-slider__img">
-					</li>
-				</ul>
+				<ul id="preview-slider-list" class="preview-slider__list"></ul>
 			</div>
 
 			<div class="preview__survey preview-survey">

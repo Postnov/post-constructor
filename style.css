@@ -123,6 +123,11 @@ textarea {
 	display: none;
 }
 
+.droparea img {
+	pointer-events: none;
+	user-select: none;
+}
+
 .droparea__list.active {
 	display: block;
 }
@@ -152,7 +157,7 @@ textarea {
 }
 
 .droparea.hightlight {
-	border-color: #fff;
+	border-color: #7b98da;
 }
 
 
