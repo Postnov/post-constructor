@@ -435,7 +435,7 @@ function addOption() {
 	li.setAttribute('data-id', optionConstructorList.children.length);
 
 	x.classList.add('create-survey__delete-option');
-	x.innerHTML = 'x';
+	x.innerHTML = 'delete option';
 
 	input.setAttribute('data-id', optionConstructorList.children.length);
 	input.setAttribute('placeholder', 'Option name');

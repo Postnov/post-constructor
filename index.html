@@ -42,12 +42,13 @@
 
 						<h2>Input servey name</h2>
 						<input type="text" id="title-survey" class="create-survey__title post-field js-typeText" data-target=".preview-survey__title" placeholder="Survey name">
+						
+						<ul class="create-survey__list"></ul>
 
-						<button id="add-option" class="create-survey__btn-option btn">add option</button>
-						<button id="delete-survey" class="create-survey__btn-option btn btn-danger">delete survey</button>
-
-						<ul class="create-survey__list">					
-						</ul>
+						<div class="survey-buttons">
+							<button id="add-option" class="create-survey__btn-option btn">add option</button>
+							<button id="delete-survey" class="create-survey__btn-option btn btn-danger">delete survey</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -66,7 +67,7 @@
 		
 
 		<div class="preview">
-			<h1>Post preview</h1>
+			<!-- <h1>Post preview</h1> -->
 
 			<h2 id="preview__title" class="preview__title">Post title</h2>
 			<p  id="preview__subtitle" class="preview__subtitle">Post descrive</p>
