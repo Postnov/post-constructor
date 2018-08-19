@@ -407,7 +407,7 @@ btnDeleteSurvey.addEventListener('click', () =>  {
 	previewSurvey.classList.add('hidden');
 
 	surveyTitle.value = '';
-	surveyPreviewTitle.innerHTML = '';
+	surveyPreviewTitle.innerHTML = 'Input survey title';
 	optionConstructorList.innerHTML = '';
 	optionPreviewList.innerHTML = '';
 });
