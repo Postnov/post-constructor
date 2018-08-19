@@ -17,6 +17,11 @@ img {
 	max-width: 100%;
 }
 
+
+.hidden {
+	display: none;
+}
+
 .btn {
 	border: none;
 	background-color: #fff;
@@ -202,4 +207,94 @@ textarea {
 .preview-survey__radio,
 .preview-survey__label-text {
 	vertical-align: middle;
+}
+
+.preview-survey__label {
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dp-slider__wrapper {
+  padding: 10px 0;
+  -webkit-transition: .5s all;
+  -o-transition: .5s all;
+  transition: .5s all;
+
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -o-transform: translateX(0);
+  transform: translateX(0);
+  overflow: hidden;
+/*  min-height: 200px;*/
+  width: 100%;
+}
+
+
+.dp-slider__wrapper > *{
+  float: left;
+}
+
+.dp-slider__prev,
+.dp-slider__next {
+  border: 1px solid;
+  color: #414b52;
+  background-color: transparent;
+  padding: 10px 30px;
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+  outline: none;
+  margin: 0 5px;
+  border-radius: 3px;
+}
+
+.dp-slider__prev:hover,
+.dp-slider__next:hover {
+  background-color: #414b52;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+.dp-slider__nav,
+.dp-slider__dots {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.dp-slider__dots button {
+  border: 1px solid;
+  color: #414b52;
+  background-color: transparent;
+  margin: 02px;
+  padding: 5px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+}
+
+.dp-slider__dots button:hover {
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+  background-color: #414b52;
+  color: #fff;
+  border-color: #414b52;
 }

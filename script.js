@@ -1,35 +1,194 @@
-/*
 
-	Plan:
-		1) React render text - done
-		2) Droparea
-		6) Add and remove images in slider
-		8) To check the number of images. Should not more ten images.
-		9) Add survey
-		10) Add option survey
-		11) Add options in preview
-		12) Delete option from list survey and from list in preview
+/*==============================
+		Start DP Slider
+================================*/
 
-*/
+function DPSlider (selector, options) {
+	
+	this.selector        = document.querySelector(selector) || document.querySelector('.dp-slider');
+	this.options         = options || {};
+
+	var slider           = this.selector,
+	    sliderOldContent = this.selector.innerHTML,
+	    sliderNewContent = '<div class="dp-slider__wrapper">' + sliderOldContent + '</div>';
+
+		//wrap old content in my element
+		this.selector.innerHTML = sliderNewContent;
+
+	    var wrapperSlider = slider.querySelector('.dp-slider__wrapper'),
+		slides            = wrapperSlider.children,
+		sliderWidth        = 0,
+		selectorWidth       = slider.clientWidth,
+
+		//opitons
+		slidePerView      = this.options.slidePerView || 1,
+		dots              = this.options.dots || false,
+		nav               = this.options.nav || false,
+		navSpeed          = this.options.navSpeed || 500,
+
+		translateWidth    = selectorWidth / slidePerView,
+	    initialTranslate  = 0;
 
 
-/*
 
-	Code point:
-		1. Render text
-		2. Droparea interactive
+	//Each slides for set width slide and calc common width
+	Object.keys(slides).forEach(function(i) {
 
-*/
+		//get item width
+		slides[i].style.width = (selectorWidth / slidePerView) + 'px';
+
+		//calc width all slide
+		sliderWidth += parseFloat(slides[i].style.width);
+	});
+
+
+
+	// Methods
+
+	this.resetWidth = function() {
+		sliderWidth = 0;
+
+		//Each slides for set width slide and calc common width
+		Object.keys(slides).forEach(function(i) {
+
+			//get item width
+			slides[i].style.width = (selectorWidth / slidePerView) + 'px';
+
+			//calc width all slide
+			sliderWidth += parseFloat(slides[i].style.width);
+		});
+
+		//set common width
+		wrapperSlider.style.width = sliderWidth + 'px';		
+	};
+
+
+	this.translateToEnd = function() {
+		var translateLast = parseFloat(wrapperSlider.style.width) - (selectorWidth / slidePerView);
+		wrapperSlider.style.transform = "translateX(-"+ translateLast + "px)";
+	}
+
+	this.translateToStart = function() {
+		initialTranslate = 0;
+		wrapperSlider.style.transform = "translateX(-"+ 0 + "px)";
+	}
+
+
+
+	//set common width
+	wrapperSlider.style.width = sliderWidth + 'px';
+
+
+	//set transition duration
+	wrapperSlider.style.transitionDuration = navSpeed + 'ms';
+
+
+	//if parametr dots is true
+	if (dots === true) {
+
+		var dotsEl = document.createElement('div');
+		dotsEl.classList.add('dp-slider__dots');
+
+
+
+		Object.keys(slides).forEach(function(i) {
+			//add dots
+			var dotsBtn = document.createElement('button');
+			dotsBtn.innerText = ++i;
+			dotsEl.appendChild(dotsBtn);
+		});
+
+		slider.appendChild(dotsEl);
+
+
+		/* Dots Translate */
+		slider.querySelectorAll('.dp-slider__dots button').forEach(function(item) {
+
+			item.addEventListener('click', function() {
+				var translateDot = this.innerText * translateWidth;
+				translateDot -= translateWidth;
+				if (translateDot > wrapperSlider.style.width) {
+					wrapperSlider.style.transform = "translateX(-"+ wrapperSlider.style.width +")";
+				}else {
+					wrapperSlider.style.transform = "translateX(-"+ translateDot + "px)";
+				}
+
+				initialTranslate = translateDot;
+			});
+		});			
+
+	}//end condition dots
+
+
+	//if parametr nav is true
+	if (nav === true) {
+
+		var navEl 	= document.createElement('div'),
+		    prevEl  	= document.createElement('button'),
+		    nextEl 	= document.createElement('button');
+		
+		navEl.classList.add('dp-slider__nav');
+		prevEl.classList.add('dp-slider__prev');
+		nextEl.classList.add('dp-slider__next');
+
+		prevEl.innerHTML = 'prev';
+		nextEl.innerHTML = 'next';
+
+		navEl.appendChild(prevEl);
+		navEl.appendChild(nextEl);
+		slider.appendChild(navEl);
+
+		//event next slide
+		nextEl.addEventListener('click', function () {
+
+			//the coordinates of the penultimate element
+			var penultimateCoord = parseFloat(wrapperSlider.style.width) - translateWidth;
+
+			if (+penultimateCoord.toFixed() > +initialTranslate.toFixed()) {
+				initialTranslate += translateWidth;
+				wrapperSlider.style.transform = "translateX(-"+ initialTranslate + "px)";
+			}
+
+		});			
+
+		//event prev slide
+		prevEl.addEventListener('click', function () {
+
+			if (initialTranslate.toFixed() === translateWidth.toFixed()) {
+				wrapperSlider.style.transform = "translateX(0px)";
+				initialTranslate = 0;
+			}else {
+				if (initialTranslate > 0) initialTranslate -= translateWidth;
+				wrapperSlider.style.transform = "translateX(-"+ initialTranslate + "px)";
+			}
+
+		});	
+
+	}//end condition nav
+};// end constructor
+
+
+
+// Slider init
+var slider = new DPSlider('.preview-slider__list', {
+	dots: false,
+	nav: true,
+	sliderPerView: 1
+});
+
+
+
+/*==============================
+		End DP Slider
+================================*/
 
 
 
 
 
-/*
-
-	1. Render text
-
-*/
+/*==============================
+		Start Render text
+================================*/
 
 
 var inputsType = document.querySelectorAll('.js-typeText');
@@ -39,7 +198,7 @@ inputsType.forEach(function(item) {
        typeElem = document.querySelector(selector),
        oldContent = typeElem.innerHTML;
 
-   item.addEventListener('keyup', function() {
+   item.addEventListener('change', function() {
       typeElem.innerHTML = item.value;
 
       if (!item.value.length) {
@@ -50,24 +209,26 @@ inputsType.forEach(function(item) {
 
 
 
+/*==============================
+		End Render text
+================================*/
 
 
 
-/*
 
-	2. Droparea interactive
-
-*/
+/*==============================
+			Droparea
+================================*/
 
 var dropzone = document.querySelector('#dropzone'),
 	droplist = document.querySelector('#droplist'),
-	sliderList = document.querySelector('#preview-slider-list'),
+	sliderList = document.querySelector('.dp-slider__wrapper'),
 	queue = [],
 	counterAmountFiles = 0;
 
 
-// Prevent default drop document
 
+// Prevent default drop document
 ;['drop', 'dragenter', 'dragleave', 'dragover'].forEach(function(eventName) {
 
 	document.addEventListener(eventName, function(e) {
@@ -79,8 +240,6 @@ var dropzone = document.querySelector('#dropzone'),
 
 
 // Add hightlight border
-
-
 ;['dragover', 'dragenter'].forEach(function(eventName) {
 
 	dropzone.addEventListener(eventName, function() {
@@ -91,7 +250,6 @@ var dropzone = document.querySelector('#dropzone'),
 
 
 // Remove hightlight border
-
 ;['dragleave', 'drop'].forEach(function(eventName) {
 
 	dropzone.addEventListener(eventName, function() {
@@ -102,28 +260,21 @@ var dropzone = document.querySelector('#dropzone'),
 
 
 
-
-
-
-/*
-
-	DROP EVENT
-
-*/
-
-
+// get files from drop
 dropzone.addEventListener('drop', function drop(e) {
 	var files = e.dataTransfer.files;
 	handleDropImage(files);
 });
 
 
+// get file from input type is file
 document.querySelector('#fileElem').addEventListener('change', function() {
 	var files = this.files;
 	handleDropImage(files);
 });
 
 
+//conditions amount image
 function handleDropImage(files) {
 	if (counterAmountFiles <= 10) handleImage(files);
 
@@ -136,15 +287,7 @@ function handleDropImage(files) {
 
 
 
-/*
-
-	Handle image: add, remove in list and slider
-
-*/
-
-
 function handleImage(files) {
-
 
 	for( file of files) {
 		var reader =  new FileReader();
@@ -163,24 +306,24 @@ function handleImage(files) {
 		reader.readAsDataURL(file);
 	}
 
-
-
-
 }
+
+
 
 function renderImageList(imageArray) {
 
 	droplist.innerHTML = '';
 	sliderList.innerHTML = '';
+	// document.querySelector('.dp-slider__wrapper').innerHTML = '';
 
-	imageArray.forEach(function(item, i) {
+	imageArray.forEach(function(src, i) {
 
 		var constructorItem = document.createElement('li'),
 			sliderItem = document.createElement('li');
 
 
 		var img = document.createElement('img');
-		img.src = item;
+		img.src = src;
 
 		var img2 = img.cloneNode();
 
@@ -189,24 +332,36 @@ function renderImageList(imageArray) {
 
 		constructorItem.classList.add('droparea__item');
 		sliderItem.classList.add('preview-slider__item');
+		sliderItem.classList.add('dp-slide');
 
 		constructorItem.appendChild(img);
 		sliderItem.appendChild(img2);
 
 		droplist.appendChild(constructorItem);
+		//document.querySelector('.dp-slider__wrapper').appendChild(sliderItem)
 		sliderList.appendChild(sliderItem);
+
+		// calculation width of slider
+		slider.resetWidth();
+
 
 		if (!droplist.classList.contains('active')) {
 			droplist.classList.add('active');
 		}
 
 		constructorItem.addEventListener('click', function() {
+
 			--counterAmountFiles;
+
 			var id = this.getAttribute('data-id');
 			queue = queue.filter(function(item, i) {
 				return i != +id;
 			});
+
 			renderImageList(queue);
+
+			// translate to begin slider
+			slider.translateToStart();
 
 			if(droplist.children.length == 0) {
 				droplist.classList.remove('active');
@@ -220,17 +375,119 @@ function renderImageList(imageArray) {
 
 
 
+/*
+
+	Survey
+
+*/
+
+
+	var btnAddSurvey		  = document.querySelector('#add-survey'),
+		btnDeleteSurvey       = document.querySelector('#delete-survey'),
+		btnAddOption          = document.querySelector('#add-option'),
+
+		previewSurvey         = document.querySelector('.preview__survey'),
+		surveyContent         = document.querySelector('#survey-content'),
+		surveyTitle           = document.querySelector('#title-survey'),
+		surveyPreviewTitle    = document.querySelector('.preview-survey__title'),
+		optionConstructorList = document.querySelector('.create-survey__list'),
+		optionPreviewList     = document.querySelector('.preview-survey__list');
+
+		
+
+btnAddSurvey.addEventListener('click', (e) => {
+	surveyContent.classList.remove('hidden');
+	e.target.classList.add('hidden');
+	previewSurvey.classList.remove('hidden');
+});
+
+btnDeleteSurvey.addEventListener('click', () =>  {
+	surveyContent.classList.add('hidden');
+	btnAddSurvey.classList.remove('hidden');
+	previewSurvey.classList.add('hidden');
+
+	surveyTitle.value = '';
+	surveyPreviewTitle.innerHTML = '';
+	optionConstructorList.innerHTML = '';
+	optionPreviewList.innerHTML = '';
+});
+
+
+btnAddOption.addEventListener('click', () => {
+	if (optionConstructorList.children.length < 5) {
+		addOption();
+	}else {
+		alert('Можно добавить только 5 вариантов');
+	}
+});
 
 
 
 
+function addOption() {
+	var li    = document.createElement('li'),
+		input = document.createElement('input'),
+		x     = document.createElement('i');
 
-function removeImage(file, queue, li) {
+	// Constructor options
 
-	queue = queue.filter(function(item){
-		return item.file != file;
+	li.classList.add('create-survey__item');
+	li.setAttribute('data-id', optionConstructorList.children.length);
+
+	x.classList.add('create-survey__delete-option');
+	x.innerHTML = 'x';
+
+	input.setAttribute('data-id', optionConstructorList.children.length);
+	input.setAttribute('placeholder', 'Option name');
+	input.setAttribute('type', 'text');
+	input.classList.add('create-survey__field');
+
+	li.appendChild(input);
+	li.appendChild(x);
+
+	optionConstructorList.appendChild(li);
+
+	x.addEventListener('click', (e) => {
+		var id = e.target.parentNode.getAttribute('data-id'),
+			li = optionConstructorList.querySelector('.create-survey__item[data-id="'+ id +'"'),
+			label = optionPreviewList.querySelector('.preview-survey__label[data-id="'+ id +'"');
+
+		optionConstructorList.removeChild(li);
+		optionPreviewList.removeChild(label);
 	});
 
-	li.parentNode.removeChild(li);
+	input.addEventListener('change', (e) => {
+		var id = e.target.getAttribute('data-id'),
+			radioElem = document.querySelector('.preview-survey__label[data-id="'+id+'"] span');
 
+			console.log(id);
+		
+		radioElem.innerHTML = e.target.value;
+	});
+
+
+
+	//Preview options
+
+	var label = document.createElement('label'),
+		radio = document.createElement('input'),
+		span = document.createElement('span');
+
+	label.classList.add('preview-survey__label');
+	radio.classList.add('preview-survey__radio');
+	span.classList.add('preview-survey__label-text');
+
+	label.setAttribute('for', 'option-' + optionPreviewList.children.length);
+	label.setAttribute('data-id', optionPreviewList.children.length);
+	
+	radio.setAttribute('name', 'survey-answer');
+	radio.id = 'option-' + optionPreviewList.children.length;
+	radio.setAttribute('type', 'radio');
+
+	label.appendChild(radio);
+	label.appendChild(span);
+
+	optionPreviewList.appendChild(label);
 }
+
+
