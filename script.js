@@ -1,17 +1,3 @@
-
-
-/*
-
-
-	+1) Замени все createElement на простые текстовые шаблоны. Когда ты добавишь их в dom - они станут элементами, которые можно удалить.
-	2) Удали счетчик, при первой загзрузке проверяй files.lenght, во все последующие проверяй queue.length
-
-
-*/
-
-
-
-
 /*==============================
 		Start DP Slider
 ================================*/
@@ -150,7 +136,7 @@ function handleImage(files) {
 			}
 		};
 
-		reader.readAsDataURL(files[file]);	    
+		reader.readAsDataURL(files[file]);
 	});
 
 }
@@ -163,12 +149,18 @@ function renderImageList(imageArray) {
 	sliderList.innerHTML = '';
 
 	imageArray.forEach(function(src, i) {
-		var constructorItem = `<li data-id="`+ i +`" class="droparea__item"><img src="`+ src +`"/></li>`,
-			sliderItem = `<li data-id="`+ i +`" class="preview-slider__item dp-slide"><img src="`+ src +`"/></li>`;
+		var constructorItem = createElement('li', { 'data-id': i }, 'droparea__item'),
+			sliderItem = createElement('li', { 'data-id': i }, 'preview-slider__item dp-slide'),
+			constructorImg = createElement('img', {'data-id': i,'src': src}),
+			sliderImg = constructorImg.cloneNode();
 
 
-		droplist.innerHTML += constructorItem;
-		sliderList.innerHTML += sliderItem;
+		constructorItem.appendChild(constructorImg);
+		sliderItem.appendChild(sliderImg);
+
+
+		droplist.appendChild(constructorItem);
+		sliderList.appendChild(sliderItem);
 
 		// calculation width of slider
 		slider.resetWidth();
@@ -178,24 +170,22 @@ function renderImageList(imageArray) {
 			droplist.classList.add('active');
 		}
 
-		droplist.querySelectorAll('.droparea__item').forEach((item, index) => {
-			item.addEventListener('click', (e) => {
+		constructorItem.addEventListener('click', (e) => {
 
-				var id = e.target.getAttribute('data-id');
+			var id = e.target.getAttribute('data-id');
 
-				queue = queue.filter(function(item, i) {
-					return i != +id;
-				});
-
-				renderImageList(queue);
-
-				// translate to begin slider
-				slider.translateToStart();
-
-				if(droplist.children.length == 0) {
-					droplist.classList.remove('active');
-				};
+			queue = queue.filter(function (item, i) {
+				return i != +id;
 			});
+
+			renderImageList(queue);
+
+			// translate to begin slider
+			slider.translateToStart();
+
+			if (droplist.children.length == 0) {
+				droplist.classList.remove('active');
+			};
 		});
 	});
 }
@@ -224,7 +214,7 @@ function renderImageList(imageArray) {
 		optionConstructorList = document.querySelector('.create-survey__list'),
 		optionPreviewList     = document.querySelector('.preview-survey__list');
 
-		
+
 
 btnAddSurvey.addEventListener('click', (e) => {
 	surveyContent.classList.remove('hidden');
@@ -256,22 +246,13 @@ btnAddOption.addEventListener('click', () => {
 
 
 function addOption() {
-	var li    = document.createElement('li'),
-		input = document.createElement('input'),
-		x     = document.createElement('i');
+	var optionsConsrLength = optionConstructorList.children.length,
+		optionsPrevLength = optionPreviewList.children.length;
 
-	// Constructor options
+	var li = createElement('li', { 'data-id': optionsConsrLength}, 'create-survey__item'),
+		input = createElement('input', { 'data-id': optionsConsrLength, 'placeholder': 'Option name' }, 'create-survey__field', 'text'),
+		x = createElement('span', undefined, 'create-survey__delete-option', undefined, 'delete option');
 
-	li.classList.add('create-survey__item');
-	li.setAttribute('data-id', optionConstructorList.children.length);
-
-	x.classList.add('create-survey__delete-option');
-	x.innerHTML = 'delete option';
-
-	input.setAttribute('data-id', optionConstructorList.children.length);
-	input.setAttribute('placeholder', 'Option name');
-	input.setAttribute('type', 'text');
-	input.classList.add('create-survey__field');
 
 	li.appendChild(input);
 	li.appendChild(x);
@@ -291,8 +272,6 @@ function addOption() {
 		var id = e.target.getAttribute('data-id'),
 			radioElem = document.querySelector('.preview-survey__label[data-id="'+id+'"] span');
 
-			console.log(id);
-		
 		radioElem.innerHTML = e.target.value;
 	});
 
@@ -300,20 +279,9 @@ function addOption() {
 
 	//Preview options
 
-	var label = document.createElement('label'),
-		radio = document.createElement('input'),
-		span = document.createElement('span');
-
-	label.classList.add('preview-survey__label');
-	radio.classList.add('preview-survey__radio');
-	span.classList.add('preview-survey__label-text');
-
-	label.setAttribute('for', 'option-' + optionPreviewList.children.length);
-	label.setAttribute('data-id', optionPreviewList.children.length);
-	
-	radio.setAttribute('name', 'survey-answer');
-	radio.id = 'option-' + optionPreviewList.children.length;
-	radio.setAttribute('type', 'radio');
+	var label = createElement('label', { 'data-id': optionsPrevLength, 'for': 'option-' + optionsPrevLength }, 'preview-survey__label'),
+		radio = createElement('input', { 'data-id': optionsPrevLength, 'id': 'option-' + optionsPrevLength, 'name': 'survey-answer'}, 'preview-survey__radio', 'radio'),
+		span = createElement('span', undefined, 'preview-survey__label-text');
 
 	label.appendChild(radio);
 	label.appendChild(span);
@@ -322,3 +290,17 @@ function addOption() {
 }
 
 
+function createElement(node, attr, classList, type, innerHtml) {
+	var elem = document.createElement(node);
+
+	if (attr) {
+		Object.keys(attr).forEach((item) => {
+			elem.setAttribute(item, attr[item])
+		})
+	}
+	if (classList) elem.classList += classList;
+	if (type) 	   elem.setAttribute('type', type);
+	if (innerHtml) elem.innerHTML  = innerHtml;
+
+	return elem;
+}
