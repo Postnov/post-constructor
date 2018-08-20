@@ -70,9 +70,7 @@ inputsType.forEach(function(item) {
 var dropzone = document.querySelector('#dropzone'),
 	droplist = document.querySelector('#droplist'),
 	sliderList = document.querySelector('.dp-slider__wrapper'),
-	queue = [],
-	counterAmountFiles = 0;
-
+	queue = [];
 
 
 // Prevent default drop document
@@ -123,26 +121,28 @@ document.querySelector('#fileElem').addEventListener('change', function() {
 
 //conditions amount image
 function handleDropImage(files) {
-	if (counterAmountFiles <= 10) handleImage(files);
 
-	if (counterAmountFiles >= 10 || (files.length > 10 && counterAmountFiles == 0)  ) alert('Нельзя загрузить больше 10 файлов');
-
-	if (files.length > (10 - counterAmountFiles) && counterAmountFiles < 10 && counterAmountFiles > 0) {
-		alert('Всего можно загрузить 10 файлов. Вы уже загрузили ' + counterAmountFiles + '.\nВы загружаете ' + files.length + ' файлов.\nИз вашей группы были загружены первые ' + (10 - counterAmountFiles) + ' файлов.');
+	if (files.length > 10 && queue.length === 0) {
+		alert('Можно загрузить только 10 файлов.\nСейчас вы загружаете - ' + files.length + '.\nБудут загружены первые 10 файлов.');
+	}else if (queue.length === 10) {
+		alert('Можно загрузить только 10 файлов.\nСейчас в дропзоне уже 10 файлов');
+	}else if (files.length + queue.length > 10) {
+		alert('Можно загрузить только 10 файлов. Сейчас в дропзоне уже ' + queue.length + '.\nСейчас вы загружаете - ' + files.length + '.\nБудут загружены ' + (10 - queue.length) +' файлов.');
 	}
+
+	handleImage(files);
 }
 
 
 
 function handleImage(files) {
 
-	for( file of files) {
+	Object.keys(files).forEach(function (file, index) {
 		var reader =  new FileReader();
 
 		reader.onload = function (e) {
-			if (counterAmountFiles < 10) {
+			if (index < 10 && queue.length < 10) {
 				queue.push(e.target.result);
-				++counterAmountFiles;
 				renderImageList(queue); // массив
 			}else {
 				reader.abort();
@@ -150,8 +150,8 @@ function handleImage(files) {
 			}
 		};
 
-		reader.readAsDataURL(file);
-	}
+		reader.readAsDataURL(files[file]);	    
+	});
 
 }
 
@@ -163,8 +163,6 @@ function renderImageList(imageArray) {
 	sliderList.innerHTML = '';
 
 	imageArray.forEach(function(src, i) {
-
-
 		var constructorItem = `<li data-id="`+ i +`" class="droparea__item"><img src="`+ src +`"/></li>`,
 			sliderItem = `<li data-id="`+ i +`" class="preview-slider__item dp-slide"><img src="`+ src +`"/></li>`;
 
@@ -180,27 +178,29 @@ function renderImageList(imageArray) {
 			droplist.classList.add('active');
 		}
 
-		droplist.querySelector('.droparea__item').addEventListener('click', function() {
+		droplist.querySelectorAll('.droparea__item').forEach((item, index) => {
+			item.addEventListener('click', (e) => {
 
-			--counterAmountFiles;
+				var id = e.target.getAttribute('data-id');
 
-			var id = this.getAttribute('data-id');
-			queue = queue.filter(function(item, i) {
-				return i != +id;
+				queue = queue.filter(function(item, i) {
+					return i != +id;
+				});
+
+				renderImageList(queue);
+
+				// translate to begin slider
+				slider.translateToStart();
+
+				if(droplist.children.length == 0) {
+					droplist.classList.remove('active');
+				};
 			});
-
-			renderImageList(queue);
-
-			// translate to begin slider
-			slider.translateToStart();
-
-			if(droplist.children.length == 0) {
-				droplist.classList.remove('active');
-			};
 		});
-
 	});
 }
+
+
 
 
 
