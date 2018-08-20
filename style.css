@@ -65,6 +65,13 @@ img {
 
 /* Main style */
 
+.github-icon {
+	position: absolute;
+	top: 35px;
+	left: 35px;
+	width: 100px;
+}
+
 
 .create {
 	width: 69%;
